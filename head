@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=16
+#SBATCH --mem-per-cpu=4096
+#SBATCH --time=03:00:00
+#SBATCH --account=IscrC_REBEL2_1
+#SBATCH --partition=gll_usr_prod
+
+cd $SLURM_SUBMIT_DIR
+module load autoload
+module load profile/chem
+module load g16
+
+. $g16root/g16/bsd/g16.profile
+export GAUSS_SCRDIR=$CINECA_SCRATCH/G16/$SLURM_JOB_ID
+mkdir -p $GAUSS_SCRDIR
+
+g16 << eor > ./$SLURM_JOB_NAME.out
+%chk=chk.chk
+%nprocshared=16
+%mem=4096MB
+#p opt freq M062X/6-31G(d)
+
+Optimization_LB
+
+0 2
