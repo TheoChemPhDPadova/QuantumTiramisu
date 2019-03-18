@@ -1,0 +1,38 @@
+
+
+--Link1--
+%chk=chk.chk
+%nprocshared=16
+%mem=4096MB
+#p M062X/6-311+G(d,p) geom=check guess=read 
+
+Vacuum_HB
+
+0 2
+
+--Link1--
+%chk=chk.chk
+%nprocshared=16
+%mem=4096MB
+#p M062X/6-311+G(d,p) geom=check guess=read scrf=(smd,solvent=water) 
+
+Water_HB
+
+0 2
+
+--Link1--
+%chk=chk.chk
+%nprocshared=16
+%mem=4096MB
+#p M062X/6-311+G(d,p) geom=check guess=read scrf=(smd,solvent=benzene) 
+
+Benzene_HB
+
+0 2
+
+
+
+eor
+
+mv chk.chk $SLURM_JOB_NAME.chk
+rm -rf $GAUSS_SCRDIR
